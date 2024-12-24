@@ -1,0 +1,11 @@
+SERVICE_NAME=watchman
+LAMBDA_REGION=us-east-1
+S3_BUCKET=qux-lambda
+STACK_NAME=watchman-stack 
+SES_REGION=us-east-1
+SENDER_EMAIL=noreply@qux.dev
+RECIPIENT_EMAILS=example@qux.dev
+SERVERS=example1.com,example2.com 
+# If required, set the following environment variables
+#SES_ACCESS_KEY=
+#SES_SECRET_KEY=

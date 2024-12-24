@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  Watchman:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: .
+      Timeout: 300
+      Environment:
+        Variables:
+          SES_REGION: ${env:SES_REGION}
+          SENDER_EMAIL: ${env:SENDER_EMAIL}
+          RECIPIENT_EMAILS: ${env:RECIPIENT_EMAILS}
+          SERVERS: ${env:SERVERS}
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ec2:DescribeInstances
+                - ec2:DescribeInstanceStatus
+                - ec2:DescribeTags
+              Resource: "*"
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0,12 * * ? *) # every day at 12:00 AM and 12:00 PM
+            Input: "{}"
